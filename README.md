@@ -12,6 +12,6 @@
 
 
 # Arquitetura do projeto
-![]()
+![PipeLine](https://github.com/Antonio-Borges-Rufino/Dados_Aeronauticos_Data_Pipeline/blob/main/PipeLine-Arq.png)
 1. A arquitetura de funcionamento está representada na imagem acima.
 
