@@ -14,4 +14,11 @@
 # Arquitetura do projeto
 ![PipeLine](https://github.com/Antonio-Borges-Rufino/Dados_Aeronauticos_Data_Pipeline/blob/main/PipeLine-Arq.png)
 1. A arquitetura de funcionamento está representada na imagem acima.
+2. Primeiro foi construida uma API que simula a API da ICAO sobre incidentes aeronauticos.
+3. A api é composta apenas por incidentes dos EUA e os dados podem ser acessados [aqui](https://www.kaggle.com/datasets/prathamsharma123/aviation-accidents-and-incidents-ntsb-faa-waas?select=faa_incidents_data.csv)
+4. A construção da API vai ser detalhada mais a frente.
+5. Depois foram construidos 2 arquivos CSV para poder fazer a raspagem da API. Um deles contem as cidades que vão ter informações salvas no mysql em batch, e o outro contem as cidades que vão ser passadas como stream para o kafka.
+6. Para fazer a raspagem da API, utilizei o APache NiFi. Ele quem é responsavel por fazer o insert no mysql e produzir para o kafka.
+7. Com os dados no kafka, utilizei o apache druid para fazer a coleta dos dados do Kafka, fazer algumas limpezas e mandar para uma tabela hive no Hdfs.
+8. Com a tabela no Hive pronta, fiz algumas consultas e apresentei no tableu.
 
