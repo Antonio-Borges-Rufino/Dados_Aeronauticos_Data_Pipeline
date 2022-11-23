@@ -22,3 +22,21 @@
 7. Com os dados no kafka, utilizei o apache druid para fazer a coleta dos dados do Kafka, fazer algumas limpezas e mandar para uma tabela hive no Hdfs.
 8. Com a tabela no Hive pronta, fiz algumas consultas e apresentei no tableu.
 
+# API 
+1. O objetivo nessa etapa foi construir uma API que simulava a API da ICAO para incidentes aeronauticos.
+2. Para cumprir esse obejtivo, utilizei a biblioteca flask do python para construir uma API sem autenticação que tinha como função retornar registros de incidentes aeronauticos nos EUA.
+3. Para construir a API utilizei o Flask, Pandas e o conjunto de dados disposto na secção de arquitetura.
+4. Por definição, a API possui 4 parâmetros: event_city/aircraft_damage/flight_phase/aircraft_make; a os parâmetros podem ser subistituidos por '*' como coringa.
+5. A primeira coisa que eu faço na chamada do método GET é buscar o arquivo de incidentes e carregar ele com o pandas.
+```
+df = pd.read_csv("/home/hadoop/projetos/Scripts_Data/faa_incidents_data.csv")
+```
+6. Esse procedimento vai facilitar muito a pesquisa e aquisição dos dados para retorno, o pandas é uma biblioteca muito eficiente para manipulação dos dados e simplifica o processo.
+7. Depois, verifico se o caracter coringa foi passado, se isso acontecer, eu retorno todos os registros, caso não, faço a pesquisa relacionada ao primeiro parâmetro event_city.
+```
+if event_city != "*":
+            df = df.loc[df["Event City"]==event_city,['AIDS Report Number','Local Event Date','Event City','Event State','Event Airport','Aircraft Damage','Flight Phase','Aircraft Make','Aircraft Model']]
+        else:
+            df = df[['AIDS Report Number','Local Event Date','Event City','Event State','Event Airport','Aircraft Damage','Flight Phase','Aircraft Make','Aircraft Model']]
+```
+
