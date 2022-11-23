@@ -104,3 +104,6 @@ return df
  ]
 ```
 16. Todo o código da API pode ser encontrado [aqui](https://github.com/Antonio-Borges-Rufino/Dados_Aeronauticos_Data_Pipeline/blob/main/Api_Data_Incidents.py)
+
+# SQL Create Database
+1.
