@@ -39,4 +39,67 @@ if event_city != "*":
         else:
             df = df[['AIDS Report Number','Local Event Date','Event City','Event State','Event Airport','Aircraft Damage','Flight Phase','Aircraft Make','Aircraft Model']]
 ```
-
+8. O próximo passo é verificar se existe registros na pesquisa realizada, caso não exista registros retorna NULL em forma de dict python.
+```
+if len(df)>0:
+  CODE...
+else:
+  return {"Result":"Null"}
+```
+9. Caso exista registros, vai ser feita verificações para todos os parâmetros, entre elas: A existencia de registros para aquele parâmetro e se o parâmetro é coringa.
+10. Todos os aninhamentos vão ser demonstrados aqui, leve em consideração que CODE... representa o próximo aninhamento, que vou quebrar aqui para ficar mais fácil a visualização.
+11. Aninhamento de aircraft_damage.
+```
+if aircraft_damage != '*':
+  df = df.loc[df["Aircraft Damage"]==aircraft_damage]
+else:
+  df = df
+if len(df)> 0:
+  CODE...
+else:
+  return {"Result":"|Null"} 
+```
+12. Aninhamento de flight_phase.
+```
+if flight_phase != "*":
+  df = df.loc[df["Flight Phase"]==flight_phase]
+else:
+  df = df
+if len(df)>0:
+  CODE...
+else:
+  return {"Result":"||Null"}
+```
+13. No próximo aninhamento, já encontramos o retorno da API, mas vou demontrar apenas o aninhamento de aircraft_make.
+```
+if aircraft_make != "*":
+  df = df.loc[df["Aircraft Make"]==aircraft_make]
+else:
+  df = df
+if len(df)>0:
+  <RETORNO DA API>
+else:
+  return {"Result":"|||Null"}
+```
+14. O código de <RETORNO API> começa com uma subistituição dos valores nulos pela string "None", isso vai ser importante para que depois o NaN não atrapalhe na conversão para o Json no NiFi. Depois, uso a função do pandas to_dict para retornar um dicionario de dados, o parâmetro orient='records' indica que o dicionário deve ser separado por linha, ou seja, dentro da grande estrutura [] deverá haver N pequenas estruturas {} que deverão conter as colunas:valor de cada linha do Df Pandas. Vai ser demonstrado o retorno da API a seguir.
+```
+df.fillna("None",inplace=True)
+df = df.to_dict(orient='records')
+return df
+```
+15. Retorno da API
+```
+[
+    {
+        "AIDS Report Number": "19780103001059I",
+        "Local Event Date": "03-JAN-78",
+        "Event City": "MIAMI",
+        "Event State": "FL",
+        "Event Airport": "MIAMI INTL",
+        "Aircraft Damage": "None",
+        "Flight Phase": "NORMAL CRUISE",
+        "Aircraft Make": "DOUGLAS",
+        "Aircraft Model": "DC8"
+    },...
+ ]
+```
