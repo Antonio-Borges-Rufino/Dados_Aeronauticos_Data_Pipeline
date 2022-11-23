@@ -1,0 +1,15 @@
+{
+"type":"record",
+"name":"inform_incid",
+"fields":[
+	{"name":"AIDS Report Number","type":["null","int"]},
+	{"name":"Local Event Date","type":["null","string"]},
+	{"name":"Event City","type":["null","string"]},
+	{"name":"Event State","type":["null","string"]},
+	{"name":"Event Airport","type":["null","string"]},
+	{"name":"Aircraft Damage","type":["null","string"]},
+	{"name":"Flight Phase","type":["null","string"]},
+	{"name":"Aircraft Make","type":["null","string"]},
+	{"name":"Aircraft Model","type":["null","string"]}
+	]
+}
