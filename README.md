@@ -110,3 +110,7 @@ return df
 ```
 ssh -L 80:localhost:80 hadoop@<IP_VM>
 ```
+2. Acesse o phpmyadmin atraves da URL.
+```
+http://localhost/phpmyadmin
+```
