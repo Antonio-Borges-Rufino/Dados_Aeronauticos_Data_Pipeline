@@ -27,17 +27,18 @@
 2. Para cumprir esse obejtivo, utilizei a biblioteca flask do python para construir uma API sem autenticação que tinha como função retornar registros de incidentes aeronauticos nos EUA.
 3. Para construir a API utilizei o Flask, Pandas e o conjunto de dados disposto na secção de arquitetura.
 4. Por definição, a API possui 4 parâmetros: event_city/aircraft_damage/flight_phase/aircraft_make; a os parâmetros podem ser subistituidos por '*' como coringa.
-5. A primeira coisa que eu faço na chamada do método GET é buscar o arquivo de incidentes e carregar ele com o pandas.
+5. A primeira coisa que eu faço na chamada do método GET é buscar o arquivo de incidentes e carregar ele com o pandas. Também foram renomeadas as colunas para serem posteriormente processadas pelo NiFi.
 ```
 df = pd.read_csv("/home/hadoop/projetos/Scripts_Data/faa_incidents_data.csv")
+df = df.rename(columns={'AIDS Report Number':'AIDSReportNumber','Local Event Date':'LocalEventDate','Event City':'EventCity','Event State':'EventState','Event Airport':'EventAirport','Aircraft Damage':'AircraftDamage','Flight Phase':'FlightPhase','Aircraft Make':'AircraftMake','Aircraft Model':'AircraftModel'})
 ```
 6. Esse procedimento vai facilitar muito a pesquisa e aquisição dos dados para retorno, o pandas é uma biblioteca muito eficiente para manipulação dos dados e simplifica o processo.
 7. Depois, verifico se o caracter coringa foi passado, se isso acontecer, eu retorno todos os registros, caso não, faço a pesquisa relacionada ao primeiro parâmetro event_city.
 ```
 if event_city != "*":
-            df = df.loc[df["Event City"]==event_city,['AIDS Report Number','Local Event Date','Event City','Event State','Event Airport','Aircraft Damage','Flight Phase','Aircraft Make','Aircraft Model']]
+            df = df.loc[df["EventCity"]==event_city,['AIDSReportNumber','LocalEventDate','EventCity','EventState','EventAirport','AircraftDamage','FlightPhase','AircraftMake','AircraftModel']]
         else:
-            df = df[['AIDS Report Number','Local Event Date','Event City','Event State','Event Airport','Aircraft Damage','Flight Phase','Aircraft Make','Aircraft Model']]
+            df = df[['AIDSReportNumber','LocalEventDate','EventCity','EventState','EventAirport','AircraftDamage','FlightPhase','AircraftMake','AircraftModel']]
 ```
 8. O próximo passo é verificar se existe registros na pesquisa realizada, caso não exista registros retorna NULL em forma de dict python.
 ```
@@ -51,7 +52,7 @@ else:
 11. Aninhamento de aircraft_damage.
 ```
 if aircraft_damage != '*':
-  df = df.loc[df["Aircraft Damage"]==aircraft_damage]
+  df = df.loc[df["AircraftDamage"]==aircraft_damage]
 else:
   df = df
 if len(df)> 0:
@@ -62,7 +63,7 @@ else:
 12. Aninhamento de flight_phase.
 ```
 if flight_phase != "*":
-  df = df.loc[df["Flight Phase"]==flight_phase]
+  df = df.loc[df["FlightPhase"]==flight_phase]
 else:
   df = df
 if len(df)>0:
@@ -73,7 +74,7 @@ else:
 13. No próximo aninhamento, já encontramos o retorno da API, mas vou demontrar apenas o aninhamento de aircraft_make.
 ```
 if aircraft_make != "*":
-  df = df.loc[df["Aircraft Make"]==aircraft_make]
+  df = df.loc[df["AircraftMake"]==aircraft_make]
 else:
   df = df
 if len(df)>0:
