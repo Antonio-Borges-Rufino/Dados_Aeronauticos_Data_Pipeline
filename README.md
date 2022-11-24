@@ -121,6 +121,6 @@ CREATE DATABASE incidents;
 4. Acesse a nova base de dados através do menu lateral clicando sobre ela.
 5. Após estar na base de dados, clique novamente no menu SQL e crie a tabela que vai receber as informações. Essa tabela deve respeitar o schema definido [aqui](https://github.com/Antonio-Borges-Rufino/Dados_Aeronauticos_Data_Pipeline/blob/main/avro_schema.txt).
 ```
-CREATE TABLE incidents_aer (AIDSReportNumber INT,LocalEventDate VARCHAR(255),EventCity VARCHAR(255),EventState VARCHAR(255),EventAirport VARCHAR(255),AircraftDamage VARCHAR(255),FlightPhase VARCHAR(255),AircraftMake VARCHAR(255),AircraftModel VARCHAR(255),PRIMARY KEY (AIDSReportNumber));
+CREATE TABLE incidents_aer (AIDSReportNumber VARCHAR(255),LocalEventDate VARCHAR(255),EventCity VARCHAR(255),EventState VARCHAR(255),EventAirport VARCHAR(255),AircraftDamage VARCHAR(255),FlightPhase VARCHAR(255),AircraftMake VARCHAR(255),AircraftModel VARCHAR(255),PRIMARY KEY (AIDSReportNumber));
 ```
 6. O mysql agora está configurado para receber os dados da API.
