@@ -2,7 +2,7 @@
 "type":"record",
 "name":"inform_incid",
 "fields":[
-	{"name":"AIDSReportNumber","type":["null","int"]},
+	{"name":"AIDSReportNumber","type":["null","string"]},
 	{"name":"LocalEventDate","type":["null","string"]},
 	{"name":"EventCity","type":["null","string"]},
 	{"name":"EventState","type":["null","string"]},
