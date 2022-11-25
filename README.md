@@ -125,3 +125,10 @@ CREATE DATABASE incidents;
 CREATE TABLE incidents_aer (AIDSReportNumber VARCHAR(255),LocalEventDate VARCHAR(255),EventCity VARCHAR(255),EventState VARCHAR(255),EventAirport VARCHAR(255),AircraftDamage VARCHAR(255),FlightPhase VARCHAR(255),AircraftMake VARCHAR(255),AircraftModel VARCHAR(255),PRIMARY KEY (AIDSReportNumber));
 ```
 6. O mysql agora está configurado para receber os dados da API.
+
+# NiFi Flow
+1. Para execurtamos a tarefa do pipeline, vamos dividir em 2 grupos de processo diferentes, ambos vão ser explicados posteriormente.
+2. Os 2 grupos de processo estão demonstrados na imagem abaixo
+![](https://github.com/Antonio-Borges-Rufino/Dados_Aeronauticos_Data_Pipeline/blob/main/NIFI_FLOW.PNG)
+3. O grupo de processos GET_API_INSERT_SQL deve executar a parte do pipeline que lê um arquivo CSV com informações que devem ser buscadas pelo NiFi da API, e então gravar essas informações no MySQL.
+4. O grupo de processos GET_API_KAFKA deve executar o pipeline que vai ler um arquivo CSV igual ao grupo GET_API_INSERT_SQL, mas ele em vez de gravar no banco, vai enviar as informações para o kafka em forma de mensagem.
