@@ -158,4 +158,10 @@ CREATE TABLE incidents_aer (AIDSReportNumber VARCHAR(255),LocalEventDate VARCHAR
 16. Em relationships está marcado apenas "failure" e "unmatched" porque o matched será marcado na conexão dessa caixa com a próxima.
 17. Nas propiedades, o atributo "Destination" recebe flowfile-attribute. Depois, cria-se 4 novos atributos que vão ser repassados adiante, eles devem ser condizentes com os especificados no json, ou seja, não podem ter atributos diferentes.
 18. Os atributos são "AircraftDamage" que recebe "$.AircraftDamage", "AircraftMake" que recebe "$.AircraftMake", "EventCity" que recebe "$.EventCity" e "FlightPhase" que recebe "$.FlightPhase."
+19. A próxima caixa adicionada é a get_incidents do tipo InvokeHTTP 1.18.0, ela é responsável por pegar cada um dos arquivos "splitados" que se transformaram em variáveis e fazer uma requisição GET na API que construimos anteriormente. A imagem abaixo mostra sua configuração.  
+![](https://github.com/Antonio-Borges-Rufino/Dados_Aeronauticos_Data_Pipeline/blob/main/get_incidents.jpg)
+20. Na aba de relationships está marcado todos, menos response, que será marcado quando for feita a conexão com a próxima caixa do pipeline.
+21. Nas propiedades, a única modificada foi a URL, que recebeu "http://127.0.0.1:5000/${EventCity}/${AircraftDamage}/${FlightPhase}/${AircraftMake}", essa construção pega todas as variaveis passadas da caixa anterior e as coloca dentro da URL para fazer o GET e obter os dados.  
+  OBS: Na aba "Scheduling" existe uma opção chamada "Run Schedule", nela você pode colocar um tempo de espera de uma execução a outra do card, no meu caso, coloquei "1 min" o que siginfica que essa caixa vai rodar de 1 e 1 minutos fazendo o GET na minha API.  
+22. 
 
