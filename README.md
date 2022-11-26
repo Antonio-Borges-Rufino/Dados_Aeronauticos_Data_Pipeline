@@ -153,3 +153,8 @@ CREATE TABLE incidents_aer (AIDSReportNumber VARCHAR(255),LocalEventDate VARCHAR
 13. O segundo atributo é o "Record Writer", ele é o responsavel por fazer o output da leitura no formato Json. O processor é do tipo JsonRecordSetWriter 1.18.0 e vai transformar cada linha csv "splitada" é uma string JSON com os dados organizados. As configurações do arquivo está presente na imagem abaixo.
 ![](https://github.com/Antonio-Borges-Rufino/Dados_Aeronauticos_Data_Pipeline/blob/main/jsonTransform1.png)
 14. O ultimo atributo modificado é o "Records Per Split", que diz quantas linhas do csv vão ser "splitadas" por arquivo de saída, nesse caso, apenas 1, ou seja, uma linha do csv vai se transformar em um arquivo Json próprio.
+15. A próxima caixa a ser adicionada é a PegarAtributosPesquisa do tipo EvaluateJsonPath 1.18.0, essa caixa é responsável por pegar os atributos de cada Json separadamente e os transformar em variáveis que serão posteriormente usadas. A imagem abaixo mostra os atributos modificaveis.
+![](https://github.com/Antonio-Borges-Rufino/Dados_Aeronauticos_Data_Pipeline/blob/main/PegarAtributosPesquisa.png)
+16. Em relationships está marcado apenas "failure" e "unmatched" porque o matched será marcado na conexão dessa caixa com a próxima.
+17. Nas propiedades, o atributo "Destination" recebe flowfile-attribute. Depois, cria-se 4 novos atributos que vão ser repassados adiante, eles devem ser condizentes com os especificados no json, ou seja, não podem ter atributos diferentes.
+18. Os atributos são "AircraftDamage" que recebe $.AircraftDamage, AircraftMake que recebe $.AircraftMake, EventCity que recebe $.EventCity e FlightPhase que recebe $.FlightPhase.
