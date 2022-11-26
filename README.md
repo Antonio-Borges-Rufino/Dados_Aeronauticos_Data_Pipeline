@@ -129,50 +129,50 @@ CREATE TABLE incidents_aer (AIDSReportNumber VARCHAR(255),LocalEventDate VARCHAR
 # NiFi Flow
 1. Para execurtamos a tarefa do pipeline, vamos dividir em 2 grupos de processo diferentes, ambos vão ser explicados posteriormente.
 2. Os 2 grupos de processo estão demonstrados na imagem abaixo
-![](https://github.com/Antonio-Borges-Rufino/Dados_Aeronauticos_Data_Pipeline/blob/main/NIFI_FLOW.PNG)
+![](https://github.com/Antonio-Borges-Rufino/Dados_Aeronauticos_Data_Pipeline/blob/main/imgs/NIFI_FLOW.PNG)
 3. O grupo de processos GET_API_INSERT_SQL deve executar a parte do pipeline que lê um arquivo CSV com informações que devem ser buscadas pelo NiFi da API, e então gravar essas informações no MySQL.
 4. O grupo de processos GET_API_KAFKA deve executar o pipeline que vai ler um arquivo CSV igual ao grupo GET_API_INSERT_SQL, mas ele em vez de gravar no banco, vai enviar as informações para o kafka em forma de mensagem.
 
 # Processo GET_API_INSERT_SQL
 1. Esse processo tem como objetivo coletar dados da API e salvá-los no MySQL.
 2. Aqui está o pipeline de funcionamento do process group.
-![](https://github.com/Antonio-Borges-Rufino/Dados_Aeronauticos_Data_Pipeline/blob/main/GET_API_INSERT_SQL.PNG)
+![](https://github.com/Antonio-Borges-Rufino/Dados_Aeronauticos_Data_Pipeline/blob/main/imgs/GET_API_INSERT_SQL.PNG)
 3. As caixinhas vão ser sequencialmente explicadas, para que tudo funcione perfeitamente bem.
 4. A primeira caixinha é a PegarCSV, ela é responsável por ler o CSV que delimita quais são os dados que vão ser buscados na API, esse csv está disponível [aqui](https://github.com/Antonio-Borges-Rufino/Dados_Aeronauticos_Data_Pipeline/blob/main/sql_get.csv). A caixinha utiliza o processo GetFile 1.18.0 que busca um arquivo CSV dentro do sistemas de arquivos do servidor.
 5. A imagem abaixo mostra a configuração da caixa.
-![](https://github.com/Antonio-Borges-Rufino/Dados_Aeronauticos_Data_Pipeline/blob/main/PegarCSV.PNG)
+![](https://github.com/Antonio-Borges-Rufino/Dados_Aeronauticos_Data_Pipeline/blob/main/imgs/PegarCSV.PNG)
 6. Essa é a única aba que terá modificações nessa caixinha, é bom ressaltar que o arquivo depois de lido é deletado do servidor.
 7. O atributo "Input Directory" recebe o caminho da pasta onde vai ser coletado o arquivo CSV, nesse caso, "/home/hadoop/projetos/Scripts_Data".
 8. O atributo "File Filter" recebe o nome do arquivo ou uma expressão regular reconhecida pelo JAVA caso seja mais de 1 arquivo, nesse caso ele recebe "sql_get.csv".
 9. Os atributos de relationships são determinados na ligação entre essa caixa com a próxima, nesse caso, o atributo marcado é "success".
 10. A próxima caixa adicionada é a SplitCsvSQL do tipo SplitRecord 1.18.0, ela vai fazer o split das linhas do csv, ou seja, ele pega o arquivo csv e o separa em vários flows, cada um com uma linha do csv, cada linha vai ser processada individualmente nas próximas etapas. Aqui também é feita a conversão de csv para JSON, cada linha vai ser separada e convertida para JSON para depois ser processada. A imagem abaixo mostra as caixas que sofreram alterações.
-![](https://github.com/Antonio-Borges-Rufino/Dados_Aeronauticos_Data_Pipeline/blob/main/SplitCsvSQL.PNG)
+![](https://github.com/Antonio-Borges-Rufino/Dados_Aeronauticos_Data_Pipeline/blob/main/imgs/SplitCsvSQL.PNG)
 11. A aba relationships mostra o que o NiFi deve fazer caso aconteça alguns deses cenários, só foram marcados os cenários de falha e original porque o cenário de split vai ser marcado na conexão dessa caixa com a próxima.
 12. O primeiro atributo modificado da aba de propiedades é o "Record Reader", nele vamos passar um processor que vai ler o CSV do tipo CSVReader 1.18.0 com as propiedades setadas como na figura abaixo.
-![](https://github.com/Antonio-Borges-Rufino/Dados_Aeronauticos_Data_Pipeline/blob/main/csvTransform1.png)
+![](https://github.com/Antonio-Borges-Rufino/Dados_Aeronauticos_Data_Pipeline/blob/main/imgs/csvTransform1.png)
 13. O segundo atributo é o "Record Writer", ele é o responsavel por fazer o output da leitura no formato Json. O processor é do tipo JsonRecordSetWriter 1.18.0 e vai transformar cada linha csv "splitada" é uma string JSON com os dados organizados. As configurações do arquivo está presente na imagem abaixo.
-![](https://github.com/Antonio-Borges-Rufino/Dados_Aeronauticos_Data_Pipeline/blob/main/jsonTransform1.png)
+![](https://github.com/Antonio-Borges-Rufino/Dados_Aeronauticos_Data_Pipeline/blob/main/imgs/jsonTransform1.png)
 14. O ultimo atributo modificado é o "Records Per Split", que diz quantas linhas do csv vão ser "splitadas" por arquivo de saída, nesse caso, apenas 1, ou seja, uma linha do csv vai se transformar em um arquivo Json próprio.
 15. A próxima caixa a ser adicionada é a PegarAtributosPesquisa do tipo EvaluateJsonPath 1.18.0, essa caixa é responsável por pegar os atributos de cada Json separadamente e os transformar em variáveis que serão posteriormente usadas. A imagem abaixo mostra os atributos modificaveis.  
-![](https://github.com/Antonio-Borges-Rufino/Dados_Aeronauticos_Data_Pipeline/blob/main/PegarAtributosPesquisa.png)
+![](https://github.com/Antonio-Borges-Rufino/Dados_Aeronauticos_Data_Pipeline/blob/main/imgs/PegarAtributosPesquisa.png)
 16. Em relationships está marcado apenas "failure" e "unmatched" porque o matched será marcado na conexão dessa caixa com a próxima.
 17. Nas propiedades, o atributo "Destination" recebe flowfile-attribute. Depois, cria-se 4 novos atributos que vão ser repassados adiante, eles devem ser condizentes com os especificados no json, ou seja, não podem ter atributos diferentes.
 18. Os atributos são "AircraftDamage" que recebe "$.AircraftDamage", "AircraftMake" que recebe "$.AircraftMake", "EventCity" que recebe "$.EventCity" e "FlightPhase" que recebe "$.FlightPhase."
 19. A próxima caixa adicionada é a get_incidents do tipo InvokeHTTP 1.18.0, ela é responsável por pegar cada um dos arquivos "splitados" que se transformaram em variáveis e fazer uma requisição GET na API que construimos anteriormente. A imagem abaixo mostra sua configuração.  
-![](https://github.com/Antonio-Borges-Rufino/Dados_Aeronauticos_Data_Pipeline/blob/main/get_incidents.jpg)
+![](https://github.com/Antonio-Borges-Rufino/Dados_Aeronauticos_Data_Pipeline/blob/main/imgs/get_incidents.jpg)
 20. Na aba de relationships está marcado todos, menos response, que será marcado quando for feita a conexão com a próxima caixa do pipeline.
 21. Nas propiedades, a única modificada foi a URL, que recebeu "http://127.0.0.1:5000/${EventCity}/${AircraftDamage}/${FlightPhase}/${AircraftMake}", essa construção pega todas as variaveis passadas da caixa anterior e as coloca dentro da URL para fazer o GET e obter os dados.  
   OBS: Na aba "Scheduling" existe uma opção chamada "Run Schedule", nela você pode colocar um tempo de espera de uma execução a outra do card, no meu caso, coloquei "1 min" o que siginfica que essa caixa vai rodar de 1 e 1 minutos fazendo o GET na minha API.  
 22. A próxima caixa a ser adicionada é a atibute_schema do tipo UpdateAttribute 1.18.0, a sua função e criar um schema de transformação dos dados, isso é necessário porque a API devolve os dados no formato dict do python, apesar das similaridades, esse formato pode possuir algumas inconsistencias com o Json, para evitar esse tipo de coisa usa-se a transformação de atributo, e criar um schema válido é parte disso. As propiedades da caixa está demonstrada na imagem abaixo.  
-![](https://github.com/Antonio-Borges-Rufino/Dados_Aeronauticos_Data_Pipeline/blob/main/atibute_schema.JPG)
+![](https://github.com/Antonio-Borges-Rufino/Dados_Aeronauticos_Data_Pipeline/blob/main/imgs/atibute_schema.JPG)
 23. Aqui, apenas 1 atributo foi adicionado, o schema.name que recebe "inform_incid". O "inform_incid" é um processo avro do tipo AvroSchemaRegistry 1.18.0 que retém um schema pré-definido para um conjunto de dados Json.
 24. Para poder adicionar o "inform_incid" você precisa ir até o painel de process group, clicar em cima de GET_API_INSERT_SQL e no painel esquerdo criar em cima da engrenagem. Após isso, adicione um processo novo em "+" do tipo AvroSchemaRegistry 1.18.0 e configure como na imagem abaixo.  
-![](https://github.com/Antonio-Borges-Rufino/Dados_Aeronauticos_Data_Pipeline/blob/main/avro_schema_reg.jpg)
+![](https://github.com/Antonio-Borges-Rufino/Dados_Aeronauticos_Data_Pipeline/blob/main/imgs/avro_schema_reg.jpg)
 25. O schema colocado no atributo inform_incid está [aqui](https://github.com/Antonio-Borges-Rufino/Dados_Aeronauticos_Data_Pipeline/blob/main/avro_schema.txt).
 26. A penultima caixa é a tranformação dos dados de dict para Json propiamente dito. Fazemos isso através da caixa Write_Json do tipo ConvertRecord 1.18.0. O tipo ConvertRecord 1.18.0 também requer atributos "Record Reader" e "Record Writer", entretanto, dessa vez, todos os atributos são do tipo JSON, sendo o atributo "Record Reader" do tipo JsonTreeReader 1.18.0 e o atributo "Record Writer" do tipo JsonRecordSetWriter 1.18.0. Todas as configurações estão sendo mostradas na imagem abaixo.  
-![](https://github.com/Antonio-Borges-Rufino/Dados_Aeronauticos_Data_Pipeline/blob/main/atribute_json_convert.jpg)  
+![](https://github.com/Antonio-Borges-Rufino/Dados_Aeronauticos_Data_Pipeline/blob/main/imgs/atribute_json_convert.jpg)  
 27. A caixa Write_Json é conectada por fim a caixa PutDatabaseRecord do tipo PutDatabaseRecord 1.18.0, é essa caixa que faz a inserção dos dados convertidos em JSON no banco de dados MySql. As caixas são ligadas através do atributo Relationships "success". A configuração dessa caixa é mostrada na imagem a seguir.  
-![](https://github.com/Antonio-Borges-Rufino/Dados_Aeronauticos_Data_Pipeline/blob/main/putsql.JPG) 
+![](https://github.com/Antonio-Borges-Rufino/Dados_Aeronauticos_Data_Pipeline/blob/main/imgs/putsql.JPG) 
 28. O atributo Database Type indica qual é o tipo de base de dados que será usada, por isso ele recebe MySql.
 29. O atributo Statement Type indica qual é o tipo de ação usada, ele recebe INSERT porque o que queremos é a inserção dos dados.
 30. O atributo Schema Name recebe o nome da base de dados que queremos fazer a incersão.
@@ -180,7 +180,7 @@ CREATE TABLE incidents_aer (AIDSReportNumber VARCHAR(255),LocalEventDate VARCHAR
 31. Os 2 atributos anteriores são relacionados a criação da base de dados discutido anteriormente.
 32. O atributo Record Reader recebe um controller também, esse controler pode ser criado indo até o painel de grupos de processo, clicando em cima do grupo 
 GET_API_INSERT_SQL e no painel esquerdo clicando em cima da engrenagem. Entrando na pasta clica-se em "+" e adiciona o controle DBCPConnectionPool 1.18.0 como na imagem a seguir.
-![](https://github.com/Antonio-Borges-Rufino/Dados_Aeronauticos_Data_Pipeline/blob/main/conect_sql_pull.JPG)
+![](https://github.com/Antonio-Borges-Rufino/Dados_Aeronauticos_Data_Pipeline/blob/main/imgs/conect_sql_pull.JPG)
 33. Na imagem, os atributos modificados foram: Database Connection URL que recebe a url de conexão padrão jdbc:mysql://localhost:3306/incidents. O atributo Database Driver Class Name que recebe com.mysql.jdbc.Driver que é a classe do pacote jar que faz a conexão. O atributo Database Driver Location(s) que aponta onde ta o mysql_conector /home/hadoop/hadoop_ecosystem/nifi/mysql-connector-java-8.0.30.jar, o [mysql_conector pode ser obtido aqui](https://github.com/Antonio-Borges-Rufino/Dados_Aeronauticos_Data_Pipeline/blob/main/mysql-connector-java-8.0.30.jar). E por fim os atributos Database User que é root e o atributo Password que é a senha que voce configurou seu mysql.
 34. E por fim o ultimo atributo modificado em PutDatabaseRecord que é o Record Reader. Ele também é um controle da classe JsonTreeReader 1.18.0 mas com todos os parâmetros default. Ou seja, você apenas instancia um novo como os anteriores e não mexe em mais nada, apenas roda.
 35. Com isso, terminamos o primeiro fluxo de dados. API->NiFi->Mysql
