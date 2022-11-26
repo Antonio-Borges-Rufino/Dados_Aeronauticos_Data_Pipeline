@@ -141,4 +141,7 @@ CREATE TABLE incidents_aer (AIDSReportNumber VARCHAR(255),LocalEventDate VARCHAR
 4. A primeira caixinha é a PegarCSV, ela é responsável por ler o CSV que delimita quais são os dados que vão ser buscados na API, esse csv está disponível [aqui](https://github.com/Antonio-Borges-Rufino/Dados_Aeronauticos_Data_Pipeline/blob/main/sql_get.csv). A caixinha utiliza o processo GetFile 1.18.0 que busca um arquivo CSV dentro do sistemas de arquivos do servidor.
 5. A imagem abaixo mostra a configuração da caixa.
 ![](https://github.com/Antonio-Borges-Rufino/Dados_Aeronauticos_Data_Pipeline/blob/main/PegarCSV.PNG)
-6. 
+6. Essa é a única aba que terá modificações nessa caixinha, é bom ressaltar que o arquivo depois de lido é deletado do servidor.
+7. O atributo "Input Directory" recebe o caminho da pasta onde vai ser coletado o arquivo CSV, nesse caso, "/home/hadoop/projetos/Scripts_Data".
+8. O atributo "File Filter" recebe o nome do arquivo ou uma expressão regular reconhecida pelo JAVA caso seja mais de 1 arquivo, nesse caso ele recebe "sql_get.csv".
+9. Os atributos de relationships são determinados na ligação entre essa caixa com a próxima, nesse caso, o atributo marcado é "success".
