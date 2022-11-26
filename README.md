@@ -163,5 +163,13 @@ CREATE TABLE incidents_aer (AIDSReportNumber VARCHAR(255),LocalEventDate VARCHAR
 20. Na aba de relationships está marcado todos, menos response, que será marcado quando for feita a conexão com a próxima caixa do pipeline.
 21. Nas propiedades, a única modificada foi a URL, que recebeu "http://127.0.0.1:5000/${EventCity}/${AircraftDamage}/${FlightPhase}/${AircraftMake}", essa construção pega todas as variaveis passadas da caixa anterior e as coloca dentro da URL para fazer o GET e obter os dados.  
   OBS: Na aba "Scheduling" existe uma opção chamada "Run Schedule", nela você pode colocar um tempo de espera de uma execução a outra do card, no meu caso, coloquei "1 min" o que siginfica que essa caixa vai rodar de 1 e 1 minutos fazendo o GET na minha API.  
-22. 
+22. A próxima caixa a ser adicionada é a atibute_schema do tipo UpdateAttribute 1.18.0, a sua função e criar um schema de transformação dos dados, isso é necessário porque a API devolve os dados no formato dict do python, apesar das similaridades, esse formato pode possuir algumas inconsistencias com o Json, para evitar esse tipo de coisa usa-se a transformação de atributo, e criar um schema válido é parte disso. As propiedades da caixa está demonstrada na imagem abaixo.  
+![](https://github.com/Antonio-Borges-Rufino/Dados_Aeronauticos_Data_Pipeline/blob/main/atibute_schema.JPG)
+23. Aqui, apenas 1 atributo foi adicionado, o schema.name que recebe "inform_incid". O "inform_incid" é um processo avro do tipo AvroSchemaRegistry 1.18.0 que retém um schema pré-definido para um conjunto de dados Json.
+24. Para poder adicionar o "inform_incid" você precisa ir até o painel de process group, clicar em cima de GET_API_INSERT_SQL e no painel esquerdo criar em cima da engrenagem. Após isso, adicione um processo novo em "+" do tipo AvroSchemaRegistry 1.18.0 e configure como na imagem abaixo.  
+![](https://github.com/Antonio-Borges-Rufino/Dados_Aeronauticos_Data_Pipeline/blob/main/avro_schema_reg.jpg)
+25. O schema colocado no atributo inform_incid está [aqui](https://github.com/Antonio-Borges-Rufino/Dados_Aeronauticos_Data_Pipeline/blob/main/avro_schema.txt).
+26. A penultima caixa é a tranformação dos dados de dict para Json propiamente dito. Fazemos isso através da caixa Write_Json do tipo ConvertRecord 1.18.0. O tipo ConvertRecord 1.18.0 também requer atributos "Record Reader" e "Record Writer", entretanto, dessa vez, todos os atributos são do tipo JSON, sendo o atributo "Record Reader" do tipo JsonTreeReader 1.18.0 e o atributo "Record Writer" do tipo JsonRecordSetWriter 1.18.0. Todas as configurações estão sendo mostradas na imagem abaixo.  
+![](https://github.com/Antonio-Borges-Rufino/Dados_Aeronauticos_Data_Pipeline/blob/main/atribute_json_convert.jpg)  
+27. 
 
