@@ -132,3 +132,13 @@ CREATE TABLE incidents_aer (AIDSReportNumber VARCHAR(255),LocalEventDate VARCHAR
 ![](https://github.com/Antonio-Borges-Rufino/Dados_Aeronauticos_Data_Pipeline/blob/main/NIFI_FLOW.PNG)
 3. O grupo de processos GET_API_INSERT_SQL deve executar a parte do pipeline que lê um arquivo CSV com informações que devem ser buscadas pelo NiFi da API, e então gravar essas informações no MySQL.
 4. O grupo de processos GET_API_KAFKA deve executar o pipeline que vai ler um arquivo CSV igual ao grupo GET_API_INSERT_SQL, mas ele em vez de gravar no banco, vai enviar as informações para o kafka em forma de mensagem.
+
+# Processo GET_API_INSERT_SQL
+1. Esse processo tem como objetivo coletar dados da API e salvá-los no MySQL.
+2. Aqui está o pipeline de funcionamento do process group.
+![](https://github.com/Antonio-Borges-Rufino/Dados_Aeronauticos_Data_Pipeline/blob/main/GET_API_INSERT_SQL.PNG)
+3. As caixinhas vão ser sequencialmente explicadas, para que tudo funcione perfeitamente bem.
+4. A primeira caixinha é a PegarCSV, ela é responsável por ler o CSV que delimita quais são os dados que vão ser buscados na API, esse csv está disponível [aqui](https://github.com/Antonio-Borges-Rufino/Dados_Aeronauticos_Data_Pipeline/blob/main/sql_get.csv). A caixinha utiliza o processo GetFile 1.18.0 que busca um arquivo CSV dentro do sistemas de arquivos do servidor.
+5. A imagem abaixo mostra a configuração da caixa.
+![](https://github.com/Antonio-Borges-Rufino/Dados_Aeronauticos_Data_Pipeline/blob/main/PegarCSV.PNG)
+6. 
