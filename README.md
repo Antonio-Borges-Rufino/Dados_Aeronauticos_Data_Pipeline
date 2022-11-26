@@ -147,3 +147,5 @@ CREATE TABLE incidents_aer (AIDSReportNumber VARCHAR(255),LocalEventDate VARCHAR
 9. Os atributos de relationships são determinados na ligação entre essa caixa com a próxima, nesse caso, o atributo marcado é "success".
 10. A próxima caixa adicionada é a SplitCsvSQL, ela vai fazer o split das linhas do csv, ou seja, ele pega o arquivo csv e o separa em vários flows, cada um com uma linha do csv, cada linha vai ser processada individualmente nas próximas etapas. Aqui também é feita a conversão de csv para JSON, cada linha vai ser separada e convertida para JSON para depois ser processada. A imagem abaixo mostra as caixas que sofreram alterações.
 ![](https://github.com/Antonio-Borges-Rufino/Dados_Aeronauticos_Data_Pipeline/blob/main/SplitCsvSQL.PNG)
+11. A aba relationships mostra o que o NiFi deve fazer caso aconteça alguns deses cenários, só foram marcados os cenários de falha e original porque o cenário de split vai ser marcado na conexão dessa caixa com a próxima.
+12. 
