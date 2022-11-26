@@ -173,5 +173,14 @@ CREATE TABLE incidents_aer (AIDSReportNumber VARCHAR(255),LocalEventDate VARCHAR
 ![](https://github.com/Antonio-Borges-Rufino/Dados_Aeronauticos_Data_Pipeline/blob/main/atribute_json_convert.jpg)  
 27. A caixa Write_Json é conectada por fim a caixa PutDatabaseRecord do tipo PutDatabaseRecord 1.18.0, é essa caixa que faz a inserção dos dados convertidos em JSON no banco de dados MySql. As caixas são ligadas através do atributo Relationships "success". A configuração dessa caixa é mostrada na imagem a seguir.  
 ![](https://github.com/Antonio-Borges-Rufino/Dados_Aeronauticos_Data_Pipeline/blob/main/putsql.JPG) 
-28.
+28. O atributo Database Type indica qual é o tipo de base de dados que será usada, por isso ele recebe MySql.
+29. O atributo Statement Type indica qual é o tipo de ação usada, ele recebe INSERT porque o que queremos é a inserção dos dados.
+30. O atributo Schema Name recebe o nome da base de dados que queremos fazer a incersão.
+31. O atributo Table Name receb o nome da tabela que vamos inserir os dados.
+31. Os 2 atributos anteriores são relacionados a criação da base de dados discutido anteriormente.
+32. O atributo Record Reader recebe um controller também, esse controler pode ser criado indo até o painel de grupos de processo, clicando em cima do grupo 
+GET_API_INSERT_SQL e no painel esquerdo clicando em cima da engrenagem. Entrando na pasta clica-se em "+" e adiciona o controle DBCPConnectionPool 1.18.0 como na imagem a seguir.
+![](https://github.com/Antonio-Borges-Rufino/Dados_Aeronauticos_Data_Pipeline/blob/main/conect_sql_pull.JPG)
+33. Na imagem, os atributos modificados foram: Database Connection URL que recebe a url de conexão padrão jdbc:mysql://localhost:3306/incidents. O atributo Database Driver Class Name que recebe com.mysql.jdbc.Driver que é a classe do pacote jar que faz a conexão. O atributo Database Driver Location(s) que aponta onde ta o mysql_conector /home/hadoop/hadoop_ecosystem/nifi/mysql-connector-java-8.0.30.jar, o [mysql_conector pode ser obtido aqui](https://github.com/Antonio-Borges-Rufino/Dados_Aeronauticos_Data_Pipeline/blob/main/mysql-connector-java-8.0.30.jar). E por fim os atributos Database User que é root e o atributo Password que é a senha que voce configurou seu mysql.
+  
 
