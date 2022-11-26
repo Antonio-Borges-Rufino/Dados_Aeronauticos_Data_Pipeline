@@ -152,3 +152,4 @@ CREATE TABLE incidents_aer (AIDSReportNumber VARCHAR(255),LocalEventDate VARCHAR
 ![](https://github.com/Antonio-Borges-Rufino/Dados_Aeronauticos_Data_Pipeline/blob/main/csvTransform1.png)
 13. O segundo atributo é o "Record Writer", ele é o responsavel por fazer o output da leitura no formato Json. O processor é do tipo JsonRecordSetWriter 1.18.0 e vai transformar cada linha csv "splitada" é uma string JSON com os dados organizados. As configurações do arquivo está presente na imagem abaixo.
 ![](https://github.com/Antonio-Borges-Rufino/Dados_Aeronauticos_Data_Pipeline/blob/main/jsonTransform1.png)
+14. O ultimo atributo modificado é o "Records Per Split", que diz quantas linhas do csv vão ser "splitadas" por arquivo de saída, nesse caso, apenas 1, ou seja, uma linha do csv vai se transformar em um arquivo Json próprio.
