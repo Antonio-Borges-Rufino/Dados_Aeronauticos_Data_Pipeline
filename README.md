@@ -171,5 +171,7 @@ CREATE TABLE incidents_aer (AIDSReportNumber VARCHAR(255),LocalEventDate VARCHAR
 25. O schema colocado no atributo inform_incid está [aqui](https://github.com/Antonio-Borges-Rufino/Dados_Aeronauticos_Data_Pipeline/blob/main/avro_schema.txt).
 26. A penultima caixa é a tranformação dos dados de dict para Json propiamente dito. Fazemos isso através da caixa Write_Json do tipo ConvertRecord 1.18.0. O tipo ConvertRecord 1.18.0 também requer atributos "Record Reader" e "Record Writer", entretanto, dessa vez, todos os atributos são do tipo JSON, sendo o atributo "Record Reader" do tipo JsonTreeReader 1.18.0 e o atributo "Record Writer" do tipo JsonRecordSetWriter 1.18.0. Todas as configurações estão sendo mostradas na imagem abaixo.  
 ![](https://github.com/Antonio-Borges-Rufino/Dados_Aeronauticos_Data_Pipeline/blob/main/atribute_json_convert.jpg)  
-27. A caixa Write_Json é conectada por fim a caixa PutDatabaseRecord do tipo PutDatabaseRecord 1.18.0, é essa caixa que faz a inserção dos dados convertidos em JSON no banco de dados MySql. As caixas são ligadas através do atributo Relationships "success".
+27. A caixa Write_Json é conectada por fim a caixa PutDatabaseRecord do tipo PutDatabaseRecord 1.18.0, é essa caixa que faz a inserção dos dados convertidos em JSON no banco de dados MySql. As caixas são ligadas através do atributo Relationships "success". A configuração dessa caixa é mostrada na imagem a seguir.  
+![](https://github.com/Antonio-Borges-Rufino/Dados_Aeronauticos_Data_Pipeline/blob/main/putsql.JPG) 
+28.
 
