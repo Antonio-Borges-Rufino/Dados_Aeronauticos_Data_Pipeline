@@ -12,7 +12,7 @@
 
 
 # Arquitetura do projeto
-![PipeLine](https://github.com/Antonio-Borges-Rufino/Dados_Aeronauticos_Data_Pipeline/blob/main/PipeLine-Arq.png)
+![PipeLine](https://github.com/Antonio-Borges-Rufino/Dados_Aeronauticos_Data_Pipeline/blob/main/imgs/PipeLine-Arq.png)
 1. A arquitetura de funcionamento está representada na imagem acima.
 2. Primeiro foi construida uma API que simula a API da ICAO sobre incidentes aeronauticos.
 3. A api é composta apenas por incidentes dos EUA e os dados podem ser acessados [aqui](https://www.kaggle.com/datasets/prathamsharma123/aviation-accidents-and-incidents-ntsb-faa-waas?select=faa_incidents_data.csv).
