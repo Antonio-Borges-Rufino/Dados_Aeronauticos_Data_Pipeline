@@ -145,7 +145,10 @@ CREATE TABLE incidents_aer (AIDSReportNumber VARCHAR(255),LocalEventDate VARCHAR
 7. O atributo "Input Directory" recebe o caminho da pasta onde vai ser coletado o arquivo CSV, nesse caso, "/home/hadoop/projetos/Scripts_Data".
 8. O atributo "File Filter" recebe o nome do arquivo ou uma expressão regular reconhecida pelo JAVA caso seja mais de 1 arquivo, nesse caso ele recebe "sql_get.csv".
 9. Os atributos de relationships são determinados na ligação entre essa caixa com a próxima, nesse caso, o atributo marcado é "success".
-10. A próxima caixa adicionada é a SplitCsvSQL, ela vai fazer o split das linhas do csv, ou seja, ele pega o arquivo csv e o separa em vários flows, cada um com uma linha do csv, cada linha vai ser processada individualmente nas próximas etapas. Aqui também é feita a conversão de csv para JSON, cada linha vai ser separada e convertida para JSON para depois ser processada. A imagem abaixo mostra as caixas que sofreram alterações.
+10. A próxima caixa adicionada é a SplitCsvSQL do tipo SplitRecord 1.18.0, ela vai fazer o split das linhas do csv, ou seja, ele pega o arquivo csv e o separa em vários flows, cada um com uma linha do csv, cada linha vai ser processada individualmente nas próximas etapas. Aqui também é feita a conversão de csv para JSON, cada linha vai ser separada e convertida para JSON para depois ser processada. A imagem abaixo mostra as caixas que sofreram alterações.
 ![](https://github.com/Antonio-Borges-Rufino/Dados_Aeronauticos_Data_Pipeline/blob/main/SplitCsvSQL.PNG)
 11. A aba relationships mostra o que o NiFi deve fazer caso aconteça alguns deses cenários, só foram marcados os cenários de falha e original porque o cenário de split vai ser marcado na conexão dessa caixa com a próxima.
-12. 
+12. O primeiro atributo modificado da aba de propiedades é o "Record Reader", nele vamos passar um processor que vai ler o CSV do tipo CSVReader 1.18.0 com as propiedades setadas como na figura abaixo.
+![](https://github.com/Antonio-Borges-Rufino/Dados_Aeronauticos_Data_Pipeline/blob/main/csvTransform1.png)
+13. O segundo atributo é o "Record Writer", ele é o responsavel por fazer o output da leitura no formato Json. O processor é do tipo JsonRecordSetWriter 1.18.0 e vai transformar cada linha csv "splitada" é uma string JSON com os dados organizados. As configurações do arquivo está presente na imagem abaixo.
+![](https://github.com/Antonio-Borges-Rufino/Dados_Aeronauticos_Data_Pipeline/blob/main/jsonTransform1.png)
