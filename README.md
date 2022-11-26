@@ -182,5 +182,9 @@ CREATE TABLE incidents_aer (AIDSReportNumber VARCHAR(255),LocalEventDate VARCHAR
 GET_API_INSERT_SQL e no painel esquerdo clicando em cima da engrenagem. Entrando na pasta clica-se em "+" e adiciona o controle DBCPConnectionPool 1.18.0 como na imagem a seguir.
 ![](https://github.com/Antonio-Borges-Rufino/Dados_Aeronauticos_Data_Pipeline/blob/main/conect_sql_pull.JPG)
 33. Na imagem, os atributos modificados foram: Database Connection URL que recebe a url de conexão padrão jdbc:mysql://localhost:3306/incidents. O atributo Database Driver Class Name que recebe com.mysql.jdbc.Driver que é a classe do pacote jar que faz a conexão. O atributo Database Driver Location(s) que aponta onde ta o mysql_conector /home/hadoop/hadoop_ecosystem/nifi/mysql-connector-java-8.0.30.jar, o [mysql_conector pode ser obtido aqui](https://github.com/Antonio-Borges-Rufino/Dados_Aeronauticos_Data_Pipeline/blob/main/mysql-connector-java-8.0.30.jar). E por fim os atributos Database User que é root e o atributo Password que é a senha que voce configurou seu mysql.
-  
+34. E por fim o ultimo atributo modificado em PutDatabaseRecord que é o Record Reader. Ele também é um controle da classe JsonTreeReader 1.18.0 mas com todos os parâmetros default. Ou seja, você apenas instancia um novo como os anteriores e não mexe em mais nada, apenas roda.
+35. Com isso, terminamos o primeiro fluxo de dados. API->NiFi->Mysql
+
+# Processo GET_API_KAFKA
+1.
 
