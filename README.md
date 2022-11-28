@@ -186,5 +186,10 @@ GET_API_INSERT_SQL e no painel esquerdo clicando em cima da engrenagem. Entrando
 35. Com isso, terminamos o primeiro fluxo de dados. API->NiFi->Mysql
 
 # Processo GET_API_KAFKA
-1.
-
+1. Com o servidor kafka rodando, execute o comando para criar o tópico "api-get-data", que será respnsável por receber os dados.
+```
+kafka-topics.sh --create --topic api-get-data --bootstrap-server localhost:9092
+```
+2. O processo do NiFi tem como objetivo pegar os dados da API e envialos para o Kafka, para que posteriormente seja lido pelo Druid.
+3. O pipeline de funcionamento do processo GET_API_KAFKA está representado pela imagem abaixo.
+![]()
