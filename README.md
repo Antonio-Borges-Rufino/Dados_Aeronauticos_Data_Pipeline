@@ -228,5 +228,5 @@ kafka-topics.sh --create --topic api-get-data --bootstrap-server localhost:9092
 28. Na aba Relationships todos foram marcados como "terminate".
 29. Com isso, terminamos a parte de inserção dos dados, agora vem as partes de análise com tableu + hive e apache druid, e movimentação dos dados com spark e hdfs.
 
-# Movimentando tabela SQL com Spark para o HDFS
+# Movimentando tabela SQL com Spark para o HDFS diretamente para o HIVE
 1.
