@@ -229,4 +229,5 @@ kafka-topics.sh --create --topic api-get-data --bootstrap-server localhost:9092
 29. Com isso, terminamos a parte de inserção dos dados, agora vem as partes de análise com tableu + hive e apache druid, e movimentação dos dados com spark e hdfs.
 
 # Movimentando tabela SQL com Spark para o HDFS diretamente para o HIVE
-1.
+1. Execute o código da API que criamos.
+2. Execute o pipeline GET_API_INSERT_SQL no NiFi.
