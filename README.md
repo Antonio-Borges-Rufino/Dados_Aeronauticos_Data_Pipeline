@@ -195,3 +195,8 @@ kafka-topics.sh --create --topic api-get-data --bootstrap-server localhost:9092
 ![](https://github.com/Antonio-Borges-Rufino/Dados_Aeronauticos_Data_Pipeline/blob/main/imgs/kafka_pipeline_nifi.JPG)
 4. A primeira caixa é a PegarCsvKafka do tipo GetFile 1.18.0, ela tem como objetivo pegar o arquivo .csv que vai mostrar quais informações coletar da API. O arquivo .csv pode ser encontrado [aqui](https://github.com/Antonio-Borges-Rufino/Dados_Aeronauticos_Data_Pipeline/blob/main/kafka_get.csv). A imagem abaixo mostra as propiedades da caixinha.
 ![](https://github.com/Antonio-Borges-Rufino/Dados_Aeronauticos_Data_Pipeline/blob/main/imgs/PegarCsvKafka.JPG)
+5. Os atributos modificados foram: "Input Directory" que recebe o caminho do csv (/home/hadoop/projetos/Scripts_Data) e "File Filter" que recebe um filtro para os arquivos que vão ser pegos, no caso, aqui foi posto apenas o nome do arquivo (kafka_get.csv).
+6. O atributo Relationships será inserido na conexão com a próxima caixa.
+7. A próxima caixa do processo é a SplitCsvToJson do tipo SplitRecord 1.18.0, ela te como objetivo pegar cada linha do arquivo .csv e tranformar em uma linha de JSON separada, que vai servir para montar a URL posteriormente. A imagem abaixo mostra os atributos configuraveis da caixa.
+![](https://github.com/Antonio-Borges-Rufino/Dados_Aeronauticos_Data_Pipeline/blob/main/imgs/SplitCsvToJson.jpg)
+8.
