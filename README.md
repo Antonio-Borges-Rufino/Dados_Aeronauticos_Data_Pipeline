@@ -209,4 +209,5 @@ kafka-topics.sh --create --topic api-get-data --bootstrap-server localhost:9092
 ![](https://github.com/Antonio-Borges-Rufino/Dados_Aeronauticos_Data_Pipeline/blob/main/imgs/invokehttpkafka.JPG)
 14. Nesse caso, o único atributo setado foi o "HTTP URL" que recebeu a URL da API (http://127.0.0.1:5000/${EventCity}/${AircraftDamage}/${FlightPhase}/${AircraftMake}) junto com as variaveis criadas anteriormente.
 15. Na aba Relationships todas as opções foi marcada como "terminate" exceto a opção "response" que é marcada quando conecta essa caixa a próxima.
-16. 
+16. Na aba scheduling você pode configurar um tempo de espera entre uma execução e outra no campo "Run Schedule", no meu caso, coloquei 1 min.
+17. 
