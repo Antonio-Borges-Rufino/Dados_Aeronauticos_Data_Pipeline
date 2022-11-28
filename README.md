@@ -192,4 +192,6 @@ kafka-topics.sh --create --topic api-get-data --bootstrap-server localhost:9092
 ```
 2. O processo do NiFi tem como objetivo pegar os dados da API e envialos para o Kafka, para que posteriormente seja lido pelo Druid.
 3. O pipeline de funcionamento do processo GET_API_KAFKA está representado pela imagem abaixo.
-![]()
+![](https://github.com/Antonio-Borges-Rufino/Dados_Aeronauticos_Data_Pipeline/blob/main/imgs/kafka_pipeline_nifi.JPG)
+4. A primeira caixa é a PegarCsvKafka do tipo GetFile 1.18.0, ela tem como objetivo pegar o arquivo .csv que vai mostrar quais informações coletar da API. O arquivo .csv pode ser encontrado [aqui](https://github.com/Antonio-Borges-Rufino/Dados_Aeronauticos_Data_Pipeline/blob/main/kafka_get.csv). A imagem abaixo mostra as propiedades da caixinha.
+![](https://github.com/Antonio-Borges-Rufino/Dados_Aeronauticos_Data_Pipeline/blob/main/imgs/PegarCsvKafka.JPG)
