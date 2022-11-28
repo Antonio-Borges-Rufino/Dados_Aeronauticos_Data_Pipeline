@@ -205,3 +205,8 @@ kafka-topics.sh --create --topic api-get-data --bootstrap-server localhost:9092
 ![](https://github.com/Antonio-Borges-Rufino/Dados_Aeronauticos_Data_Pipeline/blob/main/imgs/PegarAtributosPesquisa.JPG)
 11. Os atributos configurados aqui são: "Destination" que recebe flowfile-attribute como valor, esse valor indica a transformação em atributos das variaveis lidas no JSON. Os próximos atributos são as variaveis do arquivo JSON que são: "AircraftDamage","AircraftMake","EventCity","FlightPhase", elas recebem os valores dos atributos JSON "$.AircraftDamage","$.AircraftMake","$.EventCity","$.FlightPhase", essas variaveis podem ser acessadas através do nome dos atributos.
 12. Na aba Relationships são marcados apenas "failure" e "unmatched" como "terminate", o atributo matched vai ser marcado na ligação com a próxima caixa.
+13. A próxima caixa é a InvokeHTTP do tipo InvokeHTTP 1.18.0, ela é responsável por fazer a requisição da api e por recuperar os dados retorndados. A imagem abaixo mostra os atributos configuraveis
+![](https://github.com/Antonio-Borges-Rufino/Dados_Aeronauticos_Data_Pipeline/blob/main/imgs/invokehttpkafka.JPG)
+14. Nesse caso, o único atributo setado foi o "HTTP URL" que recebeu a URL da API (http://127.0.0.1:5000/${EventCity}/${AircraftDamage}/${FlightPhase}/${AircraftMake}) junto com as variaveis criadas anteriormente.
+15. Na aba Relationships todas as opções foi marcada como "terminate" exceto a opção "response" que é marcada quando conecta essa caixa a próxima.
+16. 
