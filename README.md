@@ -204,4 +204,4 @@ kafka-topics.sh --create --topic api-get-data --bootstrap-server localhost:9092
 10. A próxima caixa é a PegarAtributosPesquisa do tipo EvaluateJsonPath 1.18.0, ela é responsável por pegar cada JSON do passo anterior e os transformar em variaveis dentro do pipeline, e essas variaveis podem ser acessadas por qualquer caixa que esteja ligada a essa. A imagem abaixo mostra os atributos configuraveis da caixa.
 ![](https://github.com/Antonio-Borges-Rufino/Dados_Aeronauticos_Data_Pipeline/blob/main/imgs/PegarAtributosPesquisa.JPG)
 11. Os atributos configurados aqui são: "Destination" que recebe flowfile-attribute como valor, esse valor indica a transformação em atributos das variaveis lidas no JSON. Os próximos atributos são as variaveis do arquivo JSON que são: "AircraftDamage","AircraftMake","EventCity","FlightPhase", elas recebem os valores dos atributos JSON "$.AircraftDamage","$.AircraftMake","$.EventCity","$.FlightPhase", essas variaveis podem ser acessadas através do nome dos atributos.
-12.
+12. Na aba Relationships são marcados apenas "failure" e "unmatched" como "terminate", o atributo matched vai ser marcado na ligação com a próxima caixa.
