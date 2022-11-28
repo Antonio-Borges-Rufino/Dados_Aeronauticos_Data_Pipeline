@@ -224,4 +224,9 @@ kafka-topics.sh --create --topic api-get-data --bootstrap-server localhost:9092
 25. Na aba Relationships todos foram marcados como "terminate" exceto "splits" que vai ser marcado como "terminate" quando fizer a ligação com a próxima caixa.
 26. A ultima caixa do grupo de processos é a PublishKafka_2_6 do tipo PublishKafka_2_6 1.18.0, ela é responsável por publicar no tópico kafka os registros que chegam da caixa anterior. A imagem abaixo mostra os atributos configuraveis.
 ![](https://github.com/Antonio-Borges-Rufino/Dados_Aeronauticos_Data_Pipeline/blob/main/imgs/PublishKafkaset.JPG)
-27.
+27. O atributo "Kafka Brokers" recebe o endereço do host kafka, no nosso caso, é localhost:9092, que é o endereço padrão. O atributo "Topic Name" recebe o nome do tópico que você quer fazer a inserção, no nosso caso, o tópico api-get-data.
+28. Na aba Relationships todos foram marcados como "terminate".
+29. Com isso, terminamos a parte de inserção dos dados, agora vem as partes de análise com tableu + hive e apache druid, e movimentação dos dados com spark e hdfs.
+
+# Movimentando tabela SQL com Spark para o HDFS
+1.
