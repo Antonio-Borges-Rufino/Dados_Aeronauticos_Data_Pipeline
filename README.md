@@ -230,4 +230,16 @@ kafka-topics.sh --create --topic api-get-data --bootstrap-server localhost:9092
 
 # Movimentando tabela SQL com Spark para o HDFS diretamente para o HIVE
 1. Execute o código da API que criamos.
+```
+source projetos/bin/activate
+python3 projetos/Scripts_Data/Api_Data_Incidents.py
+```
 2. Execute o pipeline GET_API_INSERT_SQL no NiFi.
+```
+nifi.sh run
+```
+3. Execute o hiveserver2
+```
+hiveserver2
+```
+4. 
