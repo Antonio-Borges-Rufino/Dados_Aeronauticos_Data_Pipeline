@@ -278,3 +278,12 @@ df = spark.read \
     .load()
 ```
 12. A option("url", "jdbc:mysql://localhost:3306/incidents") indica a forma de acesso ao banco de dados mysql, enquanto option("driver", "com.mysql.cj.jdbc.Driver") indica qual driver vai ser usado para fazer a conexão, optei por esse porque o com.mysql.jdbc.Driver já está sem suporte, apenas para tirar o warn. As outras options são configurações normais, como os usuários de acesso, que são os mesmos do phpmyadmin e a tabela que queremos acessar.
+13. Para confirmar a conexão com a tabela, dou um show() no df para ver os registros.
+```
+df.show()
+```
+14. Com a conexão feita tanto no hive quanto no mysql, agora é só salvar o df como tabela no banco teste_h do hive. O comando para fazer isso é mostrado no próximo bloco de código.
+```
+df.write.saveAsTable("incidents_aer")  
+```
+15. 
