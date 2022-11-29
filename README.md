@@ -228,7 +228,7 @@ kafka-topics.sh --create --topic api-get-data --bootstrap-server localhost:9092
 28. Na aba Relationships todos foram marcados como "terminate".
 29. Com isso, terminamos a parte de inserção dos dados, agora vem as partes de análise com tableu + hive e apache druid, e movimentação dos dados com spark e hdfs.
 
-# Movimentando tabela SQL com Spark para o HDFS diretamente para o HIVE
+# Movimentando tabela SQL com Spark para o HDFS e Hive
 1. Execute o código da API que criamos.
 ```
 source projetos/bin/activate
@@ -290,10 +290,18 @@ df.write.saveAsTable("incidents_aer")
 ```
 hdfs dfs -ls /user/hive/warehouse/teste_h.db
 ```
-16. Depois, no último bloco de código, vou apenas dar um select na tabela utilizando o spark.
+16. Agora, vou salvar o arquivo no HDFS usando o formato csv, esse arquivo vai servir de input para o druid.
+```
+df.write.csv("hdfs://localhost:9000/get_mysql")
+```
+17. Comfirmando que o arquivo parquet foi salvo no hdfs
+```
+!hdfs dfs -ls /get_mysql
+```
+18. Depois, no último bloco de código, vou apenas dar um select na tabela utilizando o spark.
 ```
 spark.sql("SELECT * FROM incidents_aer").show()  
 ```
-17. Todo o código pode ser acessado [aqui](https://github.com/Antonio-Borges-Rufino/Dados_Aeronauticos_Data_Pipeline/blob/main/Spark_Mysql_Hive.ipynb)  
+19. Todo o código pode ser acessado [aqui](https://github.com/Antonio-Borges-Rufino/Dados_Aeronauticos_Data_Pipeline/blob/main/Spark_Mysql_Hive.ipynb)  
 
 OBS: Para esse trabalho poderia ser usado o sqoop, mas como o ambiente que estou usando comporta os mais atualizados (até o momento) software, o sqoop teve incompatibilidade com o driver mysql de acesso, portanto, optei por não usar o sqoop e sim o spark, que é tão poderoso quanto. 
