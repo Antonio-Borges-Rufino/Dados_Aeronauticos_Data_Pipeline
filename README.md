@@ -286,4 +286,13 @@ df.show()
 ```
 df.write.saveAsTable("incidents_aer")  
 ```
-15. 
+15. Para confirmar que a tabela foi salva no hive, vou primeiro buscar no hdfs. O resultado do comando abaixo deve ser um diretório chamado incidents_aer
+```
+hdfs dfs -ls /user/hive/warehouse/teste_h.db
+```
+16. Depois, no último bloco de código, vou apenas dar um select na tabela utilizando o spark.
+```
+spark.sql("SELECT * FROM incidents_aer").show()  
+```
+17. Todo o código pode ser acessado [aqui](https://github.com/Antonio-Borges-Rufino/Dados_Aeronauticos_Data_Pipeline/blob/main/Spark_Mysql_Hive.ipynb)  
+OBS: Para esse trabalho poderia ser usado o sqoop, mas como o ambiente que estou usando comporta os mais atualizados (até o momento) software, o sqoop teve incompatibilidade com o driver mysql de acesso, portanto, optei por não usar o sqoop e sim o spark, que é tão poderoso quanto. 
