@@ -292,7 +292,7 @@ hdfs dfs -ls /user/hive/warehouse/teste_h.db
 ```
 16. Agora, vou salvar o arquivo no HDFS usando o formato csv, esse arquivo vai servir de input para o druid.
 ```
-df.write.csv("hdfs://localhost:9000/get_mysql")
+df.write.csv("hdfs://localhost:9000/get_mysql",header=True)
 ```
 17. Comfirmando que o arquivo parquet foi salvo no hdfs
 ```
