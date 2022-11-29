@@ -242,4 +242,11 @@ nifi.sh run
 ```
 hiveserver2
 ```
-4. 
+4. Optei por fazer os comando utilizando o jupyter noteook, mas, se você não quiser, pode gerar um arquivo python com os códigos fontes aqui demonstrados e usar o seguinte comando.
+```
+spark-submit --jars /home/hadoop/hadoop_ecosystem/spark/Conectores/mysql-connector-java-8.0.30.jar /home/hadoop/projetos/Scripts_Data/Spark_Mysql_Hive.py
+```
+5. Inicie o jupyter notebook em qualquer porta e crie o arquivo Spark_Mysql_Hive dentro do nosso ambiente virtual.
+6. Primeiro, crie um sparkSession para poder se conectar ao spark.
+```
+```
