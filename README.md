@@ -249,4 +249,32 @@ spark-submit --jars /home/hadoop/hadoop_ecosystem/spark/Conectores/mysql-connect
 5. Inicie o jupyter notebook em qualquer porta e crie o arquivo Spark_Mysql_Hive dentro do nosso ambiente virtual.
 6. Primeiro, crie um sparkSession para poder se conectar ao spark.
 ```
+from pyspark.sql import SparkSession
+spark = SparkSession.builder.appName("salvarHive") \
+        .config("spark.jars","/home/hadoop/hadoop_ecosystem/spark/Conectores/mysql-connector-java-8.0.30.jar") \
+        .enableHiveSupport().getOrCreate()
 ```
+7. No código acima podemos ver alguns pontos. O primeiro é o .config() que traz o jar de conexão com o mysql, essa linha é crucial para que o código funcione no jupyter, já que a conexão com jdbc:mysql não é nativa do spark. 
+8. Outro elemento perceptivel é o .enableHiveSupport(), esse atributo permite que o spark se conecte ao metastore do hive, transformando o backend do spark sql em uma extensão da metastore do hive. Você pode otimizar esse processo atribuindo ao hive uma engine spark com configurações Hive-On-Spark, mas aqui foi apenas para passar o conteudo para o hdfs.
+9. Para se certificar da conexão com o hive, o próximo bloco de código verifica as databases e cria a database que vamos passar as informações, chamada de teste_h.
+```
+spark.sql("show databases").show()
+spark.sql("create database teste_h")
+spark.sql("use teste_h")
+```
+10. Com isso, temos a database criada e podemos fazer a transferencia dos arquivos para o hive. Para ver se a database foi realmente criada, execute esse o comando abaixo no hdfs, precisa aparecer uma pasta chamada teste_h.db
+```
+hdfs dfs -ls /user/hive/warehouse
+```
+11. Com a conexão feita e o database criado, vou conectar ao mysql através do driver indicado no primeiro bloco de código. Para isso, utilizo o método read.format("jdbc").
+```
+df = spark.read \
+    .format("jdbc") \
+    .option("url", "jdbc:mysql://localhost:3306/incidents") \
+    .option("driver", "com.mysql.cj.jdbc.Driver") \
+    .option("dbtable", "incidents_aer") \
+    .option("user", "root") \
+    .option("password", "123456789") \
+    .load()
+```
+12. A option("url", "jdbc:mysql://localhost:3306/incidents") indica a forma de acesso ao banco de dados mysql, enquanto option("driver", "com.mysql.cj.jdbc.Driver") indica qual driver vai ser usado para fazer a conexão, optei por esse porque o com.mysql.jdbc.Driver já está sem suporte, apenas para tirar o warn. As outras options são configurações normais, como os usuários de acesso, que são os mesmos do phpmyadmin e a tabela que queremos acessar.
