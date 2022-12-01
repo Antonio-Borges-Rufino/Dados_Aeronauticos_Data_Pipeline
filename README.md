@@ -316,4 +316,8 @@ OBS: Para esse trabalho poderia ser usado o sqoop, mas como o ambiente que estou
 6. Depois, clique em Connect Data e insira as informações relacionadas ao kafka, como: Bootstrap servers = localhost:9092, Topic = api-get-data e selecione Start-Of-Strean se quiser pegar todos os dados do tópico, como são poucos, vou selecionar. Aperte em Aply e depois continue, como na imagem abaixo.
 ![](https://github.com/Antonio-Borges-Rufino/Dados_Aeronauticos_Data_Pipeline/blob/main/imgs/druid_2.JPG)
 7. Perceba que tem algumas opções marcadas em vermelho, para esse projeto, não vamos fazer nenhuma alteração nelas, então aperte em seguir até a opção Filter.
-8. 
+8. Em filter, vamos fazer uma filtragem básica dos dados. Na coluna AircraftDamage aparece muitos registros vazios, com "None", não quero ler esses registros, para isso vou utilizar um filtro Not. Para utilizar o filtro, basta clicar em cima da coluna AircraftDamage que no lado direito vai aparecer um menu de opções onde vamos configurar da seguinte maneira: Type: not -> Sub-filter type: selector -> Sub-filter dimension: AircraftDamage -> Sub-filter value: None. A imagem abaixo exemplifica melhor.
+![](https://github.com/Antonio-Borges-Rufino/Dados_Aeronauticos_Data_Pipeline/blob/main/imgs/druid_3.JPG)
+9. Aperte em apply e next configure schema. Agora, todos os registros que chegarem do kafka com "None" na coluna AircraftDamage serão ignorados.
+10. Na aba configure schema, aperte em next.
+11. 
