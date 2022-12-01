@@ -322,3 +322,8 @@ OBS: Para esse trabalho poderia ser usado o sqoop, mas como o ambiente que estou
 10. Na aba configure schema, aperte em next.
 11. As próximas abas são: Partition, que você precisa configurar de onde começa os segmentos. Tune, que você precisa configurar se todos os registros vão ser selecionados (Configure para True) e Publish, onde você configura o nome do "database". A imagem a seguir vai mostrar as configurações.  
 ![](https://github.com/Antonio-Borges-Rufino/Dados_Aeronauticos_Data_Pipeline/blob/main/imgs/druid_4.jpg)
+12. A primeira imagem faz referencia a Partition, nela, o campo modificavel é "Segment granularity" que recebe "all" como valor.
+13. A segunda imagem faz referencia a Tune, o campo modificavél é a caixa de seleção "Use earliest offset" que recebe "true".
+14. A ultima imagem faz referencia a Publish e não possui nenhum campo modificável por padrão.
+15. Agora só aperte em seguir até abrir a página ingestion e espere o Status do Datasource ficar em "RUNNING" como na imagem abaixo.
+![](https://github.com/Antonio-Borges-Rufino/Dados_Aeronauticos_Data_Pipeline/blob/main/imgs/druid_5.jpg)
