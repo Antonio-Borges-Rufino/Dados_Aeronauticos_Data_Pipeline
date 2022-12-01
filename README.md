@@ -356,3 +356,6 @@ druid.storage.storageDirectory=/druid/segments
 ![](https://github.com/Antonio-Borges-Rufino/Dados_Aeronauticos_Data_Pipeline/blob/main/imgs/druid_11.JPG)
 10. Com a tabela inserida no druid, podemos fazer alguns comandos SQL na aba Query, a imagem abaixo mostra um exemplo de select na tabela.
 ![](https://github.com/Antonio-Borges-Rufino/Dados_Aeronauticos_Data_Pipeline/blob/main/imgs/druid_12.JPG)
+11. Por fim, conectamos o druid tanto em um objeto stream do kafka, quanto em lotes no HDFS, terminando a parte do processo de ingestão até o druid.
+
+# Conectando o Tableau no Hive.
