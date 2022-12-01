@@ -321,4 +321,4 @@ OBS: Para esse trabalho poderia ser usado o sqoop, mas como o ambiente que estou
 9. Aperte em apply e next configure schema. Agora, todos os registros que chegarem do kafka com "None" na coluna AircraftDamage serão ignorados.
 10. Na aba configure schema, aperte em next.
 11. As próximas abas são: Partition, que você precisa configurar de onde começa os segmentos. Tune, que você precisa configurar se todos os registros vão ser selecionados (Configure para True) e Publish, onde você configura o nome do "database". A imagem a seguir vai mostrar as configurações.  
-![](https://github.com/Antonio-Borges-Rufino/Dados_Aeronauticos_Data_Pipeline/blob/main/imgs/druid_4.JPG)
+![](https://github.com/Antonio-Borges-Rufino/Dados_Aeronauticos_Data_Pipeline/blob/main/imgs/druid_4.jpg)
