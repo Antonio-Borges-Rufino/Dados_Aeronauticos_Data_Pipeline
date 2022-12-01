@@ -343,4 +343,13 @@ cp /home/hadoop/hadoop_ecosystem/hadoop/etc/hadoop/hdfs-site.xml /home/hadoop/ha
 druid.storage.type=hdfs
 druid.storage.storageDirectory=/druid/segments
 ```
-4.
+4. Para se conectar ao HDFS usando o druid, você tem que clicar na aba Load data -> Batch-classic -> HDFS. A imagem abaixo mostra a conexão.
+![](https://github.com/Antonio-Borges-Rufino/Dados_Aeronauticos_Data_Pipeline/blob/main/imgs/druid_7.JPG)
+5. Após apertar em next, vai aparecer uma aba de configurações, nela você vai adicionar o arquivo que foi passado pelo spark ao hdfs com o seu caminho completo, nesse caso, o caminho completo é /get_mysql/part-00000-4c8548fd-d476-4660-b0a0-bf788cbb8eed-c000.csv. Aperte em apply que deve ser carregada toda a base de dados. A imagem abaixo demonstra a configuração.
+![](https://github.com/Antonio-Borges-Rufino/Dados_Aeronauticos_Data_Pipeline/blob/main/imgs/druid_8.JPG)
+6. Após todos os dados serem carregados, você pode apertar em Next e seguir para os próximos passos de configuração. Perceba que alguns passos estão marcados com vermelho, esses passos não teram configurações alteradas e você aperta next até a aba filter. 
+7. Na aba filter, você vai fazer o mesmo procedimento de filtragem da conexão do druid com o Kafka, a diferença é que aqui os dados não são em stream, mas a filtragem é exatamente a mesma, ou seja, desconsiderar as linhas que a coluna "AircraftDamage" possui o valor "None". Para fazer isso, você clica em cima da coluna e coloca no painel direito as seguintes configurações: Type=not -> Sub-Filter type=selector -> Sub-Filter dimension=AircraftDamage -> Sub-Filter value=None. Com isso, aperte em apply e prossiga para o próximo passo. A imagem abaixo demonstra a configuração.
+![](https://github.com/Antonio-Borges-Rufino/Dados_Aeronauticos_Data_Pipeline/blob/main/imgs/druid_9.JPG)
+![](https://github.com/Antonio-Borges-Rufino/Dados_Aeronauticos_Data_Pipeline/blob/main/imgs/druid_10.JPG)
+![](https://github.com/Antonio-Borges-Rufino/Dados_Aeronauticos_Data_Pipeline/blob/main/imgs/druid_11.JPG)
+![](https://github.com/Antonio-Borges-Rufino/Dados_Aeronauticos_Data_Pipeline/blob/main/imgs/druid_12.JPG)
