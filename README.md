@@ -331,3 +331,16 @@ OBS: Para esse trabalho poderia ser usado o sqoop, mas como o ambiente que estou
 ![](https://github.com/Antonio-Borges-Rufino/Dados_Aeronauticos_Data_Pipeline/blob/main/imgs/druid_6.jpg)
 
 # Druid conectado ao HDFS
+1. Por padrão, a conexão com HDFS não está habilitada na instalção que fizemos no cluster.
+2. Para habilitar a instalação, primeiro copia os arquivos hdfs-site.xml e core-site.xml para a pasta common_ do druid.
+```
+cp /home/hadoop/hadoop_ecosystem/hadoop/etc/hadoop/core-site.xml /home/hadoop/hadoop_ecosystem/druid/conf/druid/single-server/micro-quickstart/_common/
+cp /home/hadoop/hadoop_ecosystem/hadoop/etc/hadoop/hdfs-site.xml /home/hadoop/hadoop_ecosystem/druid/conf/druid/single-server/micro-quickstart/_common/
+```
+3. Depois, abra o arquivo /home/hadoop/hadoop_ecosystem/druid/conf/druid/single-server/micro-quickstart/_common/common.runtime.properties com o editor da sua preferência e descomente as seguintes linhas.
+```
+# For HDFS:
+druid.storage.type=hdfs
+druid.storage.storageDirectory=/druid/segments
+```
+4.
