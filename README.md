@@ -327,3 +327,7 @@ OBS: Para esse trabalho poderia ser usado o sqoop, mas como o ambiente que estou
 14. A ultima imagem faz referencia a Publish e não possui nenhum campo modificável por padrão.
 15. Agora só aperte em seguir até abrir a página ingestion e espere o Status do Datasource ficar em "RUNNING" como na imagem abaixo.
 ![](https://github.com/Antonio-Borges-Rufino/Dados_Aeronauticos_Data_Pipeline/blob/main/imgs/druid_5.jpg)
+16. Agora você não pode apenas acessar os dados, mas como fazer consultas SQL com dados em Streaming. A imagem abaixo mostra como isso pode ser feito usando a aba query.
+![](https://github.com/Antonio-Borges-Rufino/Dados_Aeronauticos_Data_Pipeline/blob/main/imgs/druid_6.jpg)
+
+# Druid conectado ao HDFS
