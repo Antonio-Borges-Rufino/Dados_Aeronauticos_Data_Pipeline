@@ -20,7 +20,7 @@
 5. Depois foram construidos 2 arquivos CSV para poder fazer a raspagem da API. Um deles contem as cidades que vão ter informações salvas no mysql em batch, e o outro contem as cidades que vão ser passadas como stream para o kafka.
 6. Para fazer a raspagem da API, utilizei o APache NiFi. Ele quem é responsavel por fazer o insert no mysql e produzir para o kafka.
 7. Com os dados no kafka, utilizei o apache druid para fazer a coleta dos dados do Kafka, fazer algumas limpezas e mandar para uma tabela hive no Hdfs.
-8. Com a tabela no Hive pronta, fiz algumas consultas e apresentei no tableu.
+8. Com a tabela no Hive pronta, fiz algumas consultas e apresentei no Knime Analytics.
 
 # API 
 1. O objetivo nessa etapa foi construir uma API que simulava a API da ICAO para incidentes aeronauticos.
