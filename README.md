@@ -311,4 +311,9 @@ OBS: Para esse trabalho poderia ser usado o sqoop, mas como o ambiente que estou
 2. Execute no NiFi o grupo de processos GET_API_KAFKA
 3. Espere terminar a execução.
 4. Aqui o objetivo é apenas simular um serviço de stream conectando o druid a um tópico kafka, se quiser atualizar o objeto no druid, pode executar o mesmo grupo de processos do NiFi com um arquivo csv diferente, que os dados novos vão ser inseridos no druid.
-5. Para conectar o 
+5. Para conectar o druid ao kafka, você vai em Load Data -> Streaming -> Apache kafka, como na imagem abaixo.
+![](https://github.com/Antonio-Borges-Rufino/Dados_Aeronauticos_Data_Pipeline/blob/main/imgs/druid_1.JPG)
+6. Depois, clique em Connect Data e insira as informações relacionadas ao kafka, como: Bootstrap servers = localhost:9092, Topic = api-get-data e selecione Start-Of-Strean se quiser pegar todos os dados do tópico, como são poucos, vou selecionar. Aperte em Aply e depois continue, como na imagem abaixo.
+![](https://github.com/Antonio-Borges-Rufino/Dados_Aeronauticos_Data_Pipeline/blob/main/imgs/druid_2.JPG)
+7. Perceba que tem algumas opções marcadas em vermelho, para esse projeto, não vamos fazer nenhuma alteração nelas, então aperte em seguir até a opção Filter.
+8. 
