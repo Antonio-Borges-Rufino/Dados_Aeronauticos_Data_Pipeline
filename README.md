@@ -305,3 +305,10 @@ spark.sql("SELECT * FROM incidents_aer").show()
 19. Todo o código pode ser acessado [aqui](https://github.com/Antonio-Borges-Rufino/Dados_Aeronauticos_Data_Pipeline/blob/main/Spark_Mysql_Hive.ipynb)  
 
 OBS: Para esse trabalho poderia ser usado o sqoop, mas como o ambiente que estou usando comporta os mais atualizados (até o momento) software, o sqoop teve incompatibilidade com o driver mysql de acesso, portanto, optei por não usar o sqoop e sim o spark, que é tão poderoso quanto. 
+  
+# Druid conectado ao tópico kafka
+1. Primeiro, ligue os serviços: Kafka, API, Hadoop e NiFi
+2. Execute no NiFi o grupo de processos GET_API_KAFKA
+3. Espere terminar a execução.
+4. Aqui o objetivo é apenas simular um serviço de stream conectando o druid a um tópico kafka, se quiser atualizar o objeto no druid, pode executar o mesmo grupo de processos do NiFi com um arquivo csv diferente, que os dados novos vão ser inseridos no druid.
+5. Para conectar o 
