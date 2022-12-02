@@ -356,4 +356,16 @@ druid.storage.storageDirectory=/druid/segments
 ![](https://github.com/Antonio-Borges-Rufino/Dados_Aeronauticos_Data_Pipeline/blob/main/imgs/druid_12.JPG)
 11. Por fim, conectamos o druid tanto em um objeto stream do kafka, quanto em lotes no HDFS, terminando a parte do processo de ingestão até o druid.
 
-# Conectando o Tableau no Hive.
+# Consultas no Hive utilizando Beeline.
+1. Conecte-se ao hive
+```
+beeline -u jdbc:hive2://localhost:10000
+```
+2. Use a o database teste_h
+```
+use teste_h;
+```
+3. Realize um agrupamento de numero de incidents por fabricante
+```
+SELECT COUNT(*), Aircraftmake FROM incidents_aer GROUP BY Aircraftmake;
+```
